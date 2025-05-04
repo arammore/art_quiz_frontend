@@ -9,7 +9,7 @@ export default function QuestionCard({ question, onAnswer }) {
         {question.options.map((option, idx) => (
           <button
             key={idx}
-            onClick={() => onAnswer(option === question.correct_option.name)}
+            onClick={() => onAnswer(option === question.correct_option.name, option)}
             className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-all"
           >
             {option}

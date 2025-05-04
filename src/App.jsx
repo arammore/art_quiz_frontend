@@ -22,9 +22,14 @@ export default function App() {
     }
   };
 
-  const handleAnswer = (isCorrect) => {
+  const handleAnswer = (isCorrect, selectedOption) => {
+    // Guarda la respuesta del usuario en la pregunta actual
+    const updatedQuestions = [...questions];
+    updatedQuestions[currentIndex].user_answer = selectedOption;
+
+    setQuestions(updatedQuestions);
     if (isCorrect) setCorrectCount((c) => c + 1);
-    if (currentIndex + 1 >= questions.length) {
+    if (currentIndex + 1 >= updatedQuestions.length) {
       setFinished(true);
     } else {
       setCurrentIndex((i) => i + 1);
@@ -32,8 +37,21 @@ export default function App() {
   };
 
   if (finished)
-    return <ResultsSummary total={questions.length} correct={correctCount} />;
+    return (
+      <ResultsSummary
+        total={questions.length}
+        correct={correctCount}
+        questions={questions}
+      />
+    );
+
   if (questions.length > 0)
-    return <QuestionCard question={questions[currentIndex]} onAnswer={handleAnswer} />;
+    return (
+      <QuestionCard
+        question={questions[currentIndex]}
+        onAnswer={(isCorrect, option) => handleAnswer(isCorrect, option)}
+      />
+    );
+
   return <QuizConfigForm onStart={startQuiz} />;
 }
