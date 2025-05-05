@@ -13,6 +13,7 @@ export default function App() {
   const startQuiz = async (config) => {
     try {
       const data = await fetchQuiz(config);
+      console.log("Preguntas recibidas:", data);
       setQuestions(data);
       setCurrentIndex(0);
       setCorrectCount(0);

@@ -6,6 +6,7 @@ export default function QuizConfigForm({ onStart }) {
   const [numQuestions, setNumQuestions] = useState(5);
   const [numOptions, setNumOptions] = useState(4);
   const [artMovements, setArtMovements] = useState([]);
+  const [famousOnly, setFamousOnly] = useState(false);
   const [availableMovements, setAvailableMovements] = useState([]);
 
   useEffect(() => {
@@ -19,11 +20,20 @@ export default function QuizConfigForm({ onStart }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Payload enviado:", {
+      mode,
+      art_movements: artMovements,
+      num_questions: parseInt(numQuestions),
+      num_options: parseInt(numOptions),
+      famous_only: famousOnly
+    });
+    
     onStart({
       mode,
       art_movements: artMovements,
       num_questions: parseInt(numQuestions),
       num_options: parseInt(numOptions),
+      famous_only: famousOnly
     });
   };
 
@@ -65,6 +75,15 @@ export default function QuizConfigForm({ onStart }) {
             </option>
           ))}
         </select>
+      </label>
+
+      <label className="block flex items-center space-x-2">
+        <input
+          type="checkbox"
+          checked={famousOnly}
+          onChange={(e) => setFamousOnly(e.target.checked)}
+        />
+        <span>Solo artistas famosos</span>
       </label>
 
       <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
