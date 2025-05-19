@@ -14,7 +14,7 @@ export default function App() {
     try {
       const data = await fetchQuiz(config);
       console.log("Preguntas recibidas:", data);
-      setQuestions(data);
+      setQuestions(data.questions);
       setCurrentIndex(0);
       setCorrectCount(0);
       setFinished(false);

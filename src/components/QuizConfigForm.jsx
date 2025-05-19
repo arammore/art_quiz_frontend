@@ -8,6 +8,9 @@ export default function QuizConfigForm({ onStart }) {
   const [artMovements, setArtMovements] = useState([]);
   const [famousOnly, setFamousOnly] = useState(false);
   const [availableMovements, setAvailableMovements] = useState([]);
+  const [yearMin, setYearMin] = useState("1900");
+  const [yearMax, setYearMax] = useState("2025");
+
 
   useEffect(() => {
     fetchArtMovements()
@@ -25,7 +28,9 @@ export default function QuizConfigForm({ onStart }) {
       art_movements: artMovements,
       num_questions: parseInt(numQuestions),
       num_options: parseInt(numOptions),
-      famous_only: famousOnly
+      famous_only: famousOnly,
+      year_min: yearMin ? parseInt(yearMin) : null,
+      year_max: yearMax ? parseInt(yearMax) : null
     });
     
     onStart({
@@ -33,7 +38,9 @@ export default function QuizConfigForm({ onStart }) {
       art_movements: artMovements,
       num_questions: parseInt(numQuestions),
       num_options: parseInt(numOptions),
-      famous_only: famousOnly
+      famous_only: famousOnly,
+      year_min: yearMin ? parseInt(yearMin) : null,
+      year_max: yearMax ? parseInt(yearMax) : null
     });
   };
 
@@ -84,6 +91,26 @@ export default function QuizConfigForm({ onStart }) {
           onChange={(e) => setFamousOnly(e.target.checked)}
         />
         <span>Solo artistas famosos</span>
+      </label>
+
+      <label className="block">
+        Año mínimo:
+        <input
+          type="number"
+          value={yearMin}
+          onChange={(e) => setYearMin(e.target.value)}
+          className="block w-full mt-1 p-2 border rounded"
+        />
+      </label>
+
+      <label className="block">
+        Año máximo:
+        <input
+          type="number"
+          value={yearMax}
+          onChange={(e) => setYearMax(e.target.value)}
+          className="block w-full mt-1 p-2 border rounded"
+        />
       </label>
 
       <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
