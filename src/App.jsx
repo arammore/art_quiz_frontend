@@ -14,6 +14,14 @@ export default function App() {
     try {
       const data = await fetchQuiz(config);
       console.log("Preguntas recibidas:", data);
+      if (!data.questions || data.questions.length === 0 ) {
+        alert("No hay preguntas para esos filtros. Por favor, prueba otros valores.");
+        return;
+      }
+      if (data.questions.length < config.num_questions) {
+        alert(`Solo se han encontrado ${data.questions.length} preguntas para esos filtros (pediste ${config.num_questions}). Prueba a ampliar los filtros.`);
+        return;
+    }
       setQuestions(data.questions);
       setCurrentIndex(0);
       setCorrectCount(0);

@@ -8,8 +8,8 @@ export default function QuizConfigForm({ onStart }) {
   const [artMovements, setArtMovements] = useState([]);
   const [famousOnly, setFamousOnly] = useState(false);
   const [availableMovements, setAvailableMovements] = useState([]);
-  const [yearMin, setYearMin] = useState("1900");
-  const [yearMax, setYearMax] = useState("2025");
+  const [yearMin, setYearMin] = useState("");
+  const [yearMax, setYearMax] = useState("");
 
 
   useEffect(() => {
