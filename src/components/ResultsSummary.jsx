@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ResultsSummary({ total, correct, questions }) {
+export default function ResultsSummary({ total, correct, questions, onRestart }) {
   const failed = questions.filter(q => q.user_answer !== q.correct_option.name);
 
   return (
@@ -14,10 +14,22 @@ export default function ResultsSummary({ total, correct, questions }) {
           <h3 className="text-xl font-semibold mb-2 text-red-600">Respuestas incorrectas:</h3>
           <ul className="space-y-3">
             {failed.map((q, idx) => (
-              <li key={idx} className="p-4 border rounded bg-gray-50">
-                <p><strong>Obra:</strong> {q.artwork_title}</p>
-                <p><strong>Tu respuesta:</strong> {q.user_answer}</p>
-                <p><strong>Correcta:</strong> {q.correct_option.name}</p>
+              <li key={idx} className="p-4 border rounded bg-gray-50 flex items-center justify-between">
+                <div className="flex-1">
+                  <p><strong>Obra:</strong> {q.artwork_title}</p>
+                  <p>
+                    <strong>Tu respuesta:</strong>{" "}
+                    {q.user_answer === null || q.user_answer === "timeout"
+                      ? <span className="italic text-gray-500">No respondiste a tiempo</span>
+                      : q.user_answer}
+                  </p>
+                  <p><strong>Correcta:</strong> {q.correct_option.name}</p>
+                </div>
+                <img
+                  src={q.artwork_image_link}
+                  alt={q.artwork_title}
+                  className="w-24 h-20 object-cover rounded ml-4 border shadow"
+                />
               </li>
             ))}
           </ul>

@@ -32,10 +32,8 @@ export default function App() {
   };
 
   const handleAnswer = (isCorrect, selectedOption) => {
-    // Guarda la respuesta del usuario en la pregunta actual
     const updatedQuestions = [...questions];
-    updatedQuestions[currentIndex].user_answer = selectedOption;
-
+    updatedQuestions[currentIndex].user_answer = selectedOption;  // <- Aquí SIEMPRE guarda la respuesta (aunque sea null o "No respondiste a tiempo")
     setQuestions(updatedQuestions);
     if (isCorrect) setCorrectCount((c) => c + 1);
     if (currentIndex + 1 >= updatedQuestions.length) {
@@ -58,7 +56,7 @@ export default function App() {
     return (
       <QuestionCard
         question={questions[currentIndex]}
-        onAnswer={(isCorrect, option) => handleAnswer(isCorrect, option)}
+        onAnswer={handleAnswer}
       />
     );
 
