@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 export default function QuestionCard({ question, onAnswer }) {
   const [selected, setSelected] = useState(null);
-  const [secondsLeft, setSecondsLeft] = useState(10);
+  const [secondsLeft, setSecondsLeft] = useState(5);
+  const answeredRef = useRef(false);
 
-  // Temporizador
   useEffect(() => {
-    setSecondsLeft(5); 
+    setSecondsLeft(5);
     setSelected(null);
+    answeredRef.current = false;
 
     const interval = setInterval(() => {
       setSecondsLeft((sec) => {
         if (sec === 1) {
           clearInterval(interval);
-          if (!selected) {
-            // Timeout: Marca como no respondida a tiempo
+          if (!answeredRef.current) {
+            answeredRef.current = true;
+            setSelected("timeout");
             onAnswer(false, "No respondiste a tiempo");
           }
         }
@@ -27,6 +29,8 @@ export default function QuestionCard({ question, onAnswer }) {
   }, [question]);
 
   const handleSelect = (option) => {
+    if (answeredRef.current) return;
+    answeredRef.current = true;
     setSelected(option);
     onAnswer(option === question.correct_option.name, option);
   };
